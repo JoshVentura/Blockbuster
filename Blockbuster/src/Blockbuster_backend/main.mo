@@ -1,10 +1,10 @@
 import Int "mo:base/Int";
 import Text "mo:base/Text";
-import Hash "mo:base/Hash";
 import Time "mo:base/Time";
 import HashMap "mo:base/HashMap";
 import Result "mo:base/Result";
 import Array "mo:base/Array";
+import DateTime "mo:datetime/DateTime";
  
 
 actor Blockbuster {
@@ -29,8 +29,8 @@ actor Blockbuster {
         id: Text;
         articuloId: Text;
         usuarioId: Text;
-        fechaPrestamo: Int;
-        fechaDevolucion: Int;
+        fechaPrestamo: Text;
+        fechaDevolucion: Text;
         tarifaExtra: Nat;
         activo: Bool;
     };
@@ -225,6 +225,36 @@ actor Blockbuster {
         };
     };
 
+    private func padNum(n: Int): Text {
+        if(n < 10){
+            return "0" # Int.toText(n);
+        }
+        else{
+            return Int.toText(n);
+        };
+    };
+
+    public func obtenerHoy(): async Text{
+        let hoy = Time.now;
+        let fecha = DateTime.DateTime(hoy);
+
+        //Formato DD-MM-AAAA
+        return Int.toText(fecha.day) # "-" #
+                padNum(fecha.month) # "-" #
+                padNum(fecha.day);
+    };
+
+    public func obtenerFDev(): async Text{
+        let hoy = Time.now();
+        let cincoDias = hoy + (5*24*60*60*1_000_000_000);
+        let fDevolucion = DateTime.DateTime(cincoDias);
+
+        //Formato DD-MM-AAAA
+        return Int.toText(fDevolucion.day) # "-" #
+                padNum(fDevolucion.month) # "-" #
+                padNum(fDevolucion.year);
+    };
+
     public func prestarArticulo(uId: Int, aId: Int): async registroMov{
         let articuloId: Text = Int.toText(aId);
         let usuarioId: Text = Int.toText(uId);
@@ -241,8 +271,8 @@ actor Blockbuster {
                     };
                     case(?userOk){
                         if(estaDisponible(articuloId)){
-                        let fechaPrestamo = Time.now()/(24*60*60*1_000_000_000);
-                        let fechaDevolucion = Time.now()/(5*24*60*60*1_000_000_000);
+                        let fechaPrestamo = obtenerHoy();
+                        let fechaDevolucion = obtenerFDev();
                         let id: Text = Int.toText(generarIdPrestamo());
                         let prestamo ={
                             id;
