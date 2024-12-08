@@ -7,7 +7,7 @@ el programa tiene funciones para verificar que cada usuario/articulo/prestamo ex
 un articulo existente a un usuario existente verifica que el articulo este disponible para dicho prestamo
 y da una fecha de 5 dias para poder regresar el articulo, al momento de regresar el articulo el sistema verifica
 que haya sido entregado antes de la fecha limite, y en caso de que no, se aplica una tarifa extra que debe ser pagada antes
-de hacer la devolucion */
+de hacer la devolucion. */
 
 import Int "mo:base/Int";
 import Text "mo:base/Text";
