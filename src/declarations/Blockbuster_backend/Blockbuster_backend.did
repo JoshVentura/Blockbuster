@@ -1,0 +1,44 @@
+type registroMov = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type Usuario = 
+ record {
+   email: text;
+   id: text;
+   nombre: text;
+   prestamos: vec text;
+   telefono: nat;
+ };
+type Prestamo = 
+ record {
+   activo: bool;
+   articuloId: text;
+   fechaDevolucion: text;
+   fechaPrestamo: text;
+   id: text;
+   tarifaExtra: nat;
+   usuarioId: text;
+ };
+type Articulo = 
+ record {
+   disponible: bool;
+   id: text;
+   nombre: text;
+   tipo: text;
+ };
+service : {
+  borrarArticulo: (text, text) -> (registroMov);
+  borrarUsuario: (text, text) -> (registroMov);
+  devolverArticulo: (int) -> (registroMov);
+  editarArticulo: (text, text, text, text) -> (registroMov);
+  editarUsuario: (text, text, text, text, nat) -> (registroMov);
+  obtenerArticulo: (int) -> (opt Articulo) query;
+  obtenerPrestamo: (int) -> (opt Prestamo) query;
+  obtenerUsuario: (int) -> (opt Usuario) query;
+  pagarPrestamo: (int) -> (registroMov);
+  prestarArticulo: (int, int) -> (registroMov);
+  registrarArticulo: (text, text, text) -> (registroMov);
+  registrarUsuario: (text, text, text, nat) -> (registroMov);
+}

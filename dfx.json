@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "Blockbuster_backend": {
+      "main": "src/Blockbuster_backend/main.mo",
+      "type": "motoko"
+    },
+    "Blockbuster_frontend": {
+      "dependencies": [
+        "Blockbuster_backend"
+      ],
+      "source": [
+        "src/Blockbuster_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "Blockbuster_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "mops sources"
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
