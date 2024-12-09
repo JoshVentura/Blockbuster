@@ -362,8 +362,8 @@ actor Blockbuster {
     func compararFechas(fechaDev: Text): Bool{
         let hoy = Time.now();
         let hoyEnTexto = Int.toText(hoy);
-        return Text.greater(fechaDev, hoyEnTexto);
-    };
+        return Text.greater(fechaDev ,hoyEnTexto);
+    };  
 
 //Funcion que verifica si ya fue pagada la tarifa por entrega tardia si se da el caso
     func verificarPagado(id: Text): Bool{
@@ -373,10 +373,10 @@ actor Blockbuster {
             };
             case(?prestam){
                 if(prestam.tarifaExtra == 0){
-                    return true;
+                    return false;
                 }
                 else{
-                    return false;
+                    return true;
                 };
             };
         };
@@ -401,8 +401,8 @@ actor Blockbuster {
                         usuarioId = prestamoOk.usuarioId;
                         fechaPrestamo = prestamoOk.fechaPrestamo;
                         fechaDevolucion = prestamoOk.fechaDevolucion;
-                        tarifaExtra: Nat=15;
-                        activo = false;
+                        tarifaExtra: Nat=0;
+                        activo = prestamoOk.activo;
                         };
                     prestamosMap.put(prestamoId, prestamos);
                     return #ok("Prestamo pagado exitosamente");
